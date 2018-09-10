@@ -2,13 +2,11 @@
 # restaurante-mesas
 Sistema de gerenciamento de mesas. (POO)
 #
-* RF00 - Sistema deve possuir um **CRUD** de mesas, utilizando os seguintes dados: identificador,numero de pessoas.
+* RF00 - Sistema deve possuir um **CRUD** de mesas, utilizando os seguintes dados: identificador e numero de pessoas.
 
-  
+* RF 01 - O Sistema deve permitir a atribuição de um cliente (Sem qualquer dado nessesário) a mesa, caso  não haja  mesas disponiveis o sistema deverá incluir-lo na lista de espera com os seguintes dados: Nome, Telefone e Quantidade de pessoas.
 
-* RF01 - O Sistema deve permitir o cadastro de novos clientes na fila sendo um deles o responsável pela reserva. Para que a reserva seja realizada o cliente responsável deve fornecer seu nome, telefone.
-
-  
+* RF 01.1 - Quando o cliente for adicionado a lista de espera, deve ser gerado um código de identificação do cliente (**) no qual ele ira ser chamado (Ex: Reserva Numero: 81818)
 
 * RF02 - O Sistema deve ter um sistema de fila inteligente com margem ***X***, ou seja dar prioridades à clientes cujo a quantidade de pessoas correspondem o valor exato da mesa. 
 **Exemplo**:
@@ -35,6 +33,5 @@ Sistema de gerenciamento de mesas. (POO)
 ***Y*** - DEFINIDO PELO SISTEMA
 
 * RF03 - O sistema deve permitir a liberação de mesas.
-* RF04 - O Sistema deve permitir a remoção de um cliente da fila.
-* RF05 - O sistema deve possuir um sistema de gerenciamento de fila, onde o operador ira chamar o próximo da fila, adicionar ou remover da fila.
-* RF06 - O sistema deve possuir uma tela de chamada onde exibirá o numero do cliente a ser chamado.
+* RF04 - O sistema deve possuir um sistema de gerenciamento de fila com as funções: chamar o próximo da fila, adicionar e remover da fila.
+* RF05 - O sistema deve possuir uma tela de chamada onde exibirá o identificação do cliente (**) a ser chamado.
