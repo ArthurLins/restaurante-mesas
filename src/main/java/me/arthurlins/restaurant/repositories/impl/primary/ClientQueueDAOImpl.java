@@ -17,27 +17,23 @@ public class ClientQueueDAOImpl implements ClientQueueDAO {
         this.clientQueues = new ArrayList<ClientQueue>();
     }
 
-    public void insert(ClientQueue clientQueue) {
+    @Override
+    public void storeEnqueue(ClientQueue clientQueue) throws Exception {
 
     }
 
-    public void edit(ClientQueue clientQueue) {
+    @Override
+    public void storeDequeue(ClientQueue clientQueue) throws Exception {
 
     }
 
-    public void remove(ClientQueue clientQueue) {
-
-    }
-
-    public ClientQueue getById(int id) {
+    @Override
+    public ClientQueue getFrist() throws Exception {
         return null;
     }
 
+    @Override
     public List<ClientQueue> view() {
-        return null;
-    }
-
-    public List<ClientQueue> view(int qtdPerPage, int page) {
         return null;
     }
 }

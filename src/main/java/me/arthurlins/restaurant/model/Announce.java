@@ -1,20 +1,34 @@
 package me.arthurlins.restaurant.model;
 
-import me.arthurlins.restaurant.repositories.Unique;
-
 /**
  * Created by Arthur on 24/09/2018.
  */
-public class Announce implements Unique {
+public class Announce {
 
     private long id;
+    private String title;
+    private String message;
 
+    public Announce(String title, String message) {
+        this.title = title;
+        this.message = message;
+    }
 
-    public void setId(long id) {
+    public Announce(long id, String title, String message) {
         this.id = id;
+        this.title = title;
+        this.message = message;
     }
 
     public long getId() {
         return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

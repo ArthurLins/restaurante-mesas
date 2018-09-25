@@ -11,7 +11,14 @@ public class ClientPersistenceFactory implements IFactory<ClientDAO> {
     public ClientPersistenceFactory() {
     }
 
-    public ClientDAO getInstance() {
-        return new ClientDAOImpl();
+    public ClientDAO getInstance() throws Exception {
+        final String type = "primary";
+        switch (type){
+            case "primary":
+                return new ClientDAOImpl();
+            //break;
+            default:
+                throw new Exception("No have factory");
+        }
     }
 }

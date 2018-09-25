@@ -6,34 +6,39 @@ import me.arthurlins.restaurant.repositories.bridge.AnnounceDAO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Created by Arthur on 24/09/2018.
  */
 public class AnnounceDAOImpl implements AnnounceDAO {
 
-    private long increment = 0;
+    private AtomicLong increment;
     private List<Announce> announces;
 
     public AnnounceDAOImpl() {
-        this.announces = new ArrayList<Announce>();
+        this.announces = new ArrayList<>();
+        this.increment = new AtomicLong(0);
     }
 
     public void insert(Announce announce) throws Exception {
-        if (announces.parallelStream().anyMatch(anno -> anno.getId() == announce.getId())){
+        final Announce finalAnnounce = announce;
+        if (announces.parallelStream().anyMatch(ano -> ano.getId() == finalAnnounce.getId())){
             throw new Exception("Announce already exists.");
         }
-        announce.setId(this.increment);
+        announce = new Announce(increment.getAndIncrement(), announce.getTitle(), announce.getMessage());
         announces.add(announce);
     }
 
     public void edit(Announce announce) throws Exception {
-        final Optional<Announce> value = this.announces
-                .parallelStream()
-                .filter(annoe -> announce.getId() == annoe.getId())
-                .findFirst();
-        if (value.isPresent()){
-            announces.get
+        Announce anon;
+        for (int i = 0; i < announces.size(); i++){
+             anon = announces.get(i);
+             if (anon.getId() == announce.getId()){
+                 announce = new Announce(announce.getId(), announce.getTitle(), announce.getMessage());
+                 announces.set(i, announce);
+                 return;
+             }
         }
         throw new Exception("Announce not exists");
     }
@@ -48,7 +53,6 @@ public class AnnounceDAOImpl implements AnnounceDAO {
                 .filter(announce -> announce.getId() == id)
                 .findFirst();
         return value.orElse(null);
-        //return null;
     }
 
     public List<Announce> view() {
@@ -56,6 +60,7 @@ public class AnnounceDAOImpl implements AnnounceDAO {
     }
 
     public List<Announce> view(int qtdPerPage, int page) {
+        //Todo..
         return null;
     }
 }

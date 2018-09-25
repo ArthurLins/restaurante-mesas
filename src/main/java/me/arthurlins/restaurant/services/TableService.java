@@ -11,6 +11,10 @@ public class TableService {
     private TableDAO dao;
 
     public TableService() {
-        this.dao = new TablePersistenceFactory().getInstance();
+        try {
+            this.dao = new TablePersistenceFactory().getInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

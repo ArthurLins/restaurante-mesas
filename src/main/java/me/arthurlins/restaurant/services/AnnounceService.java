@@ -11,7 +11,11 @@ public class AnnounceService {
     private AnnounceDAO dao;
 
     public AnnounceService() {
-        this.dao = new AnnouncePersistenceFactory().getInstance();
+        try {
+            this.dao = new AnnouncePersistenceFactory().getInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

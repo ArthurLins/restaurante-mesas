@@ -1,5 +1,6 @@
 package me.arthurlins.restaurant.services;
 
+import me.arthurlins.restaurant.model.ClientQueue;
 import me.arthurlins.restaurant.repositories.bridge.ClientQueueDAO;
 import me.arthurlins.restaurant.repositories.factories.ClientQueuePersistenceFactory;
 
@@ -8,11 +9,25 @@ import me.arthurlins.restaurant.repositories.factories.ClientQueuePersistenceFac
  */
 public class ClientQueueService {
 
+
+
+    private final int SKIP_COUNT = 2;
+    private final int MARGIN = 1;
+
+
     private ClientQueueDAO dao;
 
     public ClientQueueService() {
-        this.dao = new ClientQueuePersistenceFactory().getInstance();
+        try {
+            this.dao = new ClientQueuePersistenceFactory().getInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
+
+    public ClientQueue getNext(){
+        return null;
+    }
 
 }

@@ -5,6 +5,6 @@ package me.arthurlins.restaurant.repositories.factories;
  */
 public interface IFactory<T> {
 
-    T getInstance();
+    T getInstance() throws Exception;
 
 }

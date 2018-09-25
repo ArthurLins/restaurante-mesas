@@ -12,7 +12,11 @@ public class ClientService {
     private ClientDAO dao;
 
     public ClientService(){
-        this.dao = new ClientPersistenceFactory().getInstance();
+        try {
+            this.dao = new ClientPersistenceFactory().getInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void insert(){

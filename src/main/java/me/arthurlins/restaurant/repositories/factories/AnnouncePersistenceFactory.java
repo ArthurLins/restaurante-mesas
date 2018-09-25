@@ -11,7 +11,15 @@ public class AnnouncePersistenceFactory implements IFactory<AnnounceDAO> {
     public AnnouncePersistenceFactory() {
     }
 
-    public AnnounceDAO getInstance() {
-        return new AnnounceDAOImpl();
+    public AnnounceDAO getInstance() throws Exception {
+        final String type = "primary";
+        switch (type){
+            case "primary":
+                return new AnnounceDAOImpl();
+                //break;
+
+            default:
+                throw new Exception("No have factory");
+        }
     }
 }
