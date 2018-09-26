@@ -1015,7 +1015,7 @@
 											"top": 132,
 											"width": 136.5888671875,
 											"height": 13,
-											"text": "-skipedCount: int",
+											"text": "-skippedCount: int",
 											"horizontalAlignment": 0
 										},
 										{
@@ -9267,7 +9267,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFlsN+Rukjs7aU="
 							},
-							"name": "skipedCount",
+							"name": "skippedCount",
 							"visibility": "private",
 							"type": "int"
 						},

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 /**
  * Created by Arthur on 24/09/2018.
@@ -23,11 +24,15 @@ public class TableDAOImpl implements TableDAO {
 
     public void insert(Table table) throws Exception {
         final Table finalTable = table;
-        if (tables.parallelStream().anyMatch(ano -> ano.getId() == finalTable.getId())){
-            throw new Exception("Table already exists.");
+        if (table.getId() != -1) {
+            if (tables.parallelStream().anyMatch(ano -> ano.getId() == finalTable.getId())) {
+                throw new Exception("Table already exists.");
+            }
         }
-        table = new Table(increment.getAndIncrement(), table.getName(), table.getCapacity(), table.isTaked());
+        table = new Table(increment.getAndIncrement(), table.getName(), table.getCapacity(), table.isTacked(),
+                table.getPersonsInTable());
         tables.add(table);
+
     }
 
     public void edit(Table table) throws Exception {
@@ -35,7 +40,7 @@ public class TableDAOImpl implements TableDAO {
         for (int i = 0; i < tables.size(); i++){
             anon = tables.get(i);
             if (anon.getId() == table.getId()){
-                table = new Table(increment.getAndIncrement(), table.getName(), table.getCapacity(), table.isTaked());
+                table = new Table(table.getId(), table.getName(), table.getCapacity(), table.isTacked(), table.getPersonsInTable());
                 tables.set(i, table);
                 return;
             }
@@ -47,7 +52,7 @@ public class TableDAOImpl implements TableDAO {
         this.tables.removeIf(ano -> table.getId() == ano.getId());
     }
 
-    public Table getById(int id) {
+    public Table getById(long id) {
         final Optional<Table> value = this.tables
                 .parallelStream()
                 .filter(table -> table.getId() == id)
@@ -55,9 +60,21 @@ public class TableDAOImpl implements TableDAO {
         return value.orElse(null);
     }
 
-    public List<Table> view() {
-        return this.tables;
+    @Override
+    public List<Table> getAllEmptyTables() {
+        return tables.parallelStream().filter(table -> !table.isTacked()).collect(Collectors.toList());
     }
+
+    @Override
+    public List<Table> getAllTakenTables() {
+        return tables.parallelStream().filter(Table::isTacked).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Table> getAll() {
+        return tables;
+    }
+
 
     public List<Table> view(int qtdPerPage, int page) {
         //Todo..

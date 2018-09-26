@@ -16,7 +16,7 @@ public class AnnouncePersistenceFactory implements IFactory<AnnounceDAO> {
         switch (type){
             case "primary":
                 return new AnnounceDAOImpl();
-                //break;
+            //break;
 
             default:
                 throw new Exception("No have factory");

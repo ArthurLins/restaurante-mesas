@@ -6,46 +6,86 @@ package me.arthurlins.restaurant.model;
 public class ClientQueue {
 
     private long id;
-    private Client client;
-    private ClientQueue next;
-    private int skipedCount;
 
-    public ClientQueue(long id, Client client, ClientQueue next, int skipedCount) {
+    private String randomCode;
+    private String name;
+    private String phone;
+    private int personQtd;
+
+    private int skippedCount;
+    private boolean attended;
+
+    public ClientQueue(long id, String name, String phone, int personQtd, int skippedCount, boolean attended, String randomCode) {
         this.id = id;
-        this.client = client;
-        this.next = next;
-        this.skipedCount = skipedCount;
+        this.name = name;
+        this.phone = phone;
+        this.attended = attended;
+        this.personQtd = personQtd;
+        this.skippedCount = skippedCount;
+        this.randomCode = randomCode;
     }
 
-    public ClientQueue(Client client) {
-        this.client = client;
+    public ClientQueue(String name, String phone, int personQtd, String randomCode) {
+        this(-1, name, phone, personQtd, 0, false, randomCode);
     }
 
-    public Client getClient() {
-        return client;
+    public int getSkippedCount() {
+        return skippedCount;
     }
 
-    public ClientQueue getNext() {
-        return next;
+    public void setSkippedCount(int skippedCount) {
+        this.skippedCount = skippedCount;
     }
 
-    public int getSkipedCount() {
-        return skipedCount;
+    public void skip() {
+        skippedCount++;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public boolean isAttended() {
+        return attended;
     }
 
     public long getId() {
         return id;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setAttended(boolean attended) {
+        this.attended = attended;
     }
 
-    public void setNext(Client next) {
-        this.next = next;
+    public void attend() {
+        attended = true;
     }
 
-    public void setSkipedCount(int skipedCount) {
-        this.skipedCount = skipedCount;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public int getPersonQtd() {
+        return personQtd;
+    }
+
+    public void setPersonQtd(int personQtd) {
+        this.personQtd = personQtd;
+    }
+
+    public String getRandomCode() {
+        return randomCode;
     }
 }

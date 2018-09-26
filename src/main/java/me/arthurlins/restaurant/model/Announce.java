@@ -6,29 +6,33 @@ package me.arthurlins.restaurant.model;
 public class Announce {
 
     private long id;
-    private String title;
-    private String message;
+    private ClientQueue clientQueue;
+    private Table table;
 
-    public Announce(String title, String message) {
-        this.title = title;
-        this.message = message;
+
+    public Announce(ClientQueue clientQueue, Table table) {
+        this(-1, clientQueue, table);
     }
 
-    public Announce(long id, String title, String message) {
+    public Announce(long id, ClientQueue clientQueue, Table table) {
         this.id = id;
-        this.title = title;
-        this.message = message;
+        this.clientQueue = clientQueue;
+        this.table = table;
     }
 
     public long getId() {
         return id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getCode() {
+        return clientQueue.getRandomCode();
     }
 
-    public String getMessage() {
-        return message;
+    public Table getTable() {
+        return table;
+    }
+
+    public ClientQueue getClientQueue() {
+        return clientQueue;
     }
 }

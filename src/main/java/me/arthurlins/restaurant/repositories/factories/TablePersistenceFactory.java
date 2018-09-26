@@ -1,7 +1,6 @@
 package me.arthurlins.restaurant.repositories.factories;
 
 import me.arthurlins.restaurant.repositories.bridge.TableDAO;
-import me.arthurlins.restaurant.repositories.impl.primary.AnnounceDAOImpl;
 import me.arthurlins.restaurant.repositories.impl.primary.TableDAOImpl;
 
 /**
