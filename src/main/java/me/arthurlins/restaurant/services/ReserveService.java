@@ -14,14 +14,12 @@ public class ReserveService {
     private TableService tableService;
     private ClientQueueService clientQueueService;
     private AnnounceService announceService;
-    //private ClientService clientService;
 
 
     public ReserveService(TableService tableService, ClientQueueService clientQueueService, AnnounceService announceService) {
         this.tableService = tableService;
         this.clientQueueService = clientQueueService;
         this.announceService = announceService;
-        //this.clientService = clientService;
     }
 
     public void newTableLiberate(Table table) throws Exception {
