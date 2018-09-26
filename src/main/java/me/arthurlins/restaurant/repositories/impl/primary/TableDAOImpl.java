@@ -22,7 +22,7 @@ public class TableDAOImpl implements TableDAO {
         this.increment = new AtomicLong(0);
     }
 
-    public void insert(Table table) throws Exception {
+    public Table insert(Table table) throws Exception {
         final Table finalTable = table;
         if (table.getId() != -1) {
             if (tables.parallelStream().anyMatch(ano -> ano.getId() == finalTable.getId())) {
@@ -32,7 +32,7 @@ public class TableDAOImpl implements TableDAO {
         table = new Table(increment.getAndIncrement(), table.getName(), table.getCapacity(), table.isTacked(),
                 table.getPersonsInTable());
         tables.add(table);
-
+        return table;
     }
 
     public void edit(Table table) throws Exception {

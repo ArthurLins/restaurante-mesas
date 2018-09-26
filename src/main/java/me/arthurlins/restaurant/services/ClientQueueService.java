@@ -4,10 +4,10 @@ import me.arthurlins.restaurant.model.ClientQueue;
 import me.arthurlins.restaurant.repositories.bridge.ClientQueueDAO;
 import me.arthurlins.restaurant.repositories.factories.ClientQueuePersistenceFactory;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Created by Arthur on 24/09/2018.
@@ -17,8 +17,7 @@ public class ClientQueueService {
 
 
     private final int SKIP_COUNT = 2;
-    private final int MARGIN = 1;
-
+    private final int MARGIN = 0;
 
     private ClientQueueDAO dao;
 
@@ -41,30 +40,36 @@ public class ClientQueueService {
             return null;
         }
         if (clientQueues.size() == 1) {
+            if (qtdPersons < clientQueues.get(0).getPersonQtd()) {
+                return null;
+            }
             return clientQueues.get(0);
         }
-        List<ClientQueue> skipped = new ArrayList<>();
-        for (int i = 0; i <= SKIP_COUNT; i++) {
-            ClientQueue cl = clientQueues.get(i);
-            if (cl == null) {
-                Optional<ClientQueue> optionalClientQueue = skipped
-                        .parallelStream()
-                        .max(Comparator.comparing(ClientQueue::getSkippedCount));
-                return optionalClientQueue.orElse(null);
+        List<ClientQueue> currentQueue = clientQueues.parallelStream().collect(Collectors.toList());
+        ClientQueue resultClient = null;
+        for (ClientQueue clientQueue : currentQueue) {
+            if (clientQueue.getSkippedCount() >= SKIP_COUNT) {
+                resultClient = clientQueue;
             }
-            if (cl.getPersonQtd() == qtdPersons) {
-                return cl;
+            if (clientQueue.getPersonQtd() == qtdPersons) {
+                resultClient = clientQueue;
             }
-            if (cl.getPersonQtd() + MARGIN == qtdPersons) {
-                return cl;
+
+            if (Math.abs(clientQueue.getPersonQtd() - qtdPersons) <= MARGIN) {
+                resultClient = clientQueue;
             }
-            if (cl.getSkippedCount() >= SKIP_COUNT) {
-                return cl;
+
+            if (resultClient != clientQueue) {
+                clientQueue.skip();
             }
-            cl.skip();
-            skipped.add(cl);
         }
-        return null;
+        if (resultClient != null) {
+            return resultClient;
+        }
+        Optional<ClientQueue> finalClient = currentQueue.parallelStream()
+                .filter((clientQueue -> clientQueue.getPersonQtd() <= qtdPersons))
+                .max(Comparator.comparing(ClientQueue::getId));
+        return finalClient.orElse(null);
     }
 
     public void attend(ClientQueue clientQueue) throws Exception {

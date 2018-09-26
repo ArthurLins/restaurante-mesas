@@ -29,14 +29,18 @@ public class TableConsoleView extends ConsoleSection {
 
     private void liberate() {
         clear();
-        view(tableService.getAllTakenTables(), false);
-        title("Digite o ID da mesa");
-        long id = getValidLongInput();
-        try {
-            tableService.liberateById(id);
-            title("Mesa liberada.");
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (tableService.getAllTakenTables().isEmpty()) {
+            error("Não há mesas.");
+        } else {
+            view(tableService.getAllTakenTables(), false);
+            title("Digite o ID da mesa");
+            long id = getValidLongInput();
+            try {
+                tableService.liberateById(id);
+                title("Mesa liberada.");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         makeBackMenu();
     }

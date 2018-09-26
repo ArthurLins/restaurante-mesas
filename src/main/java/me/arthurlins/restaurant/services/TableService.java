@@ -6,13 +6,14 @@ import me.arthurlins.restaurant.repositories.factories.TablePersistenceFactory;
 
 import java.security.InvalidParameterException;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Arthur on 24/09/2018.
  */
 public class TableService {
 
-    private int MARGIN_PERSON = 2;
+    private int MARGIN_PERSON = 1;
     private TableDAO dao;
     private ReserveService reserveService;
 
@@ -32,7 +33,10 @@ public class TableService {
         if (capacity <= 0) {
             throw new InvalidParameterException();
         }
-        dao.insert(new Table(name, capacity, false, 0));
+        Table table = new Table(name, capacity, false, 0);
+        table = dao.insert(table);
+        liberateTable(table);
+        reserveService.newTableLiberate(table);
     }
 
     public void edit(Table table) throws Exception {
@@ -51,14 +55,27 @@ public class TableService {
         if (tables.isEmpty()) {
             return null;
         }
-        for (int i = 0; i < (MARGIN_PERSON + 1); i++) {
-            for (Table table : tables) {
-                if (table.getCapacity() == qtdPersons + i) {
-                    return table;
-                }
-            }
+
+        Optional<Table> optionalTableExact = tables.parallelStream()
+                .filter(table -> table.getCapacity() == qtdPersons)
+                .findFirst();
+
+        if (optionalTableExact.isPresent()) {
+            return optionalTableExact.get();
         }
-        return null;
+
+        Optional<Table> optionalTableMargin = tables.parallelStream()
+                .filter(table -> (Math.abs(table.getCapacity() - qtdPersons) <= MARGIN_PERSON) && qtdPersons <= table.getCapacity())
+                .findFirst();
+        return optionalTableMargin.orElse(null);
+
+//        for (int i = 0; i < (MARGIN_PERSON + 1); i++) {
+//            for (Table table : tables) {
+//                if (table.getCapacity() == qtdPersons + i) {
+//                    return table;
+//                }
+//            }
+//        }
     }
 
     public void liberateById(long id) throws Exception {

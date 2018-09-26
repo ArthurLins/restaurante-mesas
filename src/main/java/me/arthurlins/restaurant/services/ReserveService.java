@@ -25,8 +25,12 @@ public class ReserveService {
     }
 
     public void newTableLiberate(Table table) throws Exception {
+        if (clientQueueService.viewQueue().isEmpty()) {
+            return;
+        }
         ClientQueue clientQueue = clientQueueService.getBestClientQueueTo(table.getCapacity());
         clientQueueService.attend(clientQueue);
+        tableService.takeTable(table, clientQueue.getPersonQtd());
         announceService.makeNewAnnounce(new Announce(clientQueue, table));
     }
 

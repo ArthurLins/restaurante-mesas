@@ -63,10 +63,11 @@ public class MainConsoleView extends ConsoleSection {
                     reserveConsoleView.setPreviousSection(this);
                     reserveConsoleView.reserve();
                 }),
-                new MenuOption("4", "Atender chamado", () -> {
-                    announceConsoleView.setPreviousSection(this);
-                    announceConsoleView.attendCode();
-                }),
+//Todo: v2
+//                new MenuOption("4", "Atender chamado", () -> {
+//                    announceConsoleView.setPreviousSection(this);
+//                    announceConsoleView.attendCode();
+//                }),
                 new MenuOption("5", "Sair", () -> {
                     System.exit(0);
                 })

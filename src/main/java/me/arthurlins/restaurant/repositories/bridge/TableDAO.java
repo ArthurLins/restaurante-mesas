@@ -8,7 +8,7 @@ import java.util.List;
  * Created by Arthur on 24/09/2018.
  */
 public interface TableDAO {
-    void insert(Table Table) throws Exception;
+    Table insert(Table Table) throws Exception;
     void edit(Table Table) throws Exception;
     void remove(Table Table);
 
