@@ -53,7 +53,6 @@ public class MainConsoleView extends ConsoleSection {
                 new MenuOption("1", "Ver mesas", () -> {
                     tableConsoleView.setPreviousSection(this);
                     tableConsoleView.mainMenu();
-                    //System.out.println(tableConsoleView);
                 }),
                 new MenuOption("2", "Ver Fila", () -> {
                     queueConsoleView.setPreviousSection(this);
@@ -63,11 +62,7 @@ public class MainConsoleView extends ConsoleSection {
                     reserveConsoleView.setPreviousSection(this);
                     reserveConsoleView.reserve();
                 }),
-//Todo: v2
-//                new MenuOption("4", "Atender chamado", () -> {
-//                    announceConsoleView.setPreviousSection(this);
-//                    announceConsoleView.attendCode();
-//                }),
+
                 new MenuOption("5", "Sair", () -> {
                     System.exit(0);
                 })

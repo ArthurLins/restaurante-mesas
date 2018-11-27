@@ -20,6 +20,5 @@ public interface TableDAO {
 
     List<Table> getAll();
 
-    //List<Table> view();
     List<Table> view(int qtdPerPage, int page);
 }

@@ -17,7 +17,6 @@ public class TablePersistenceFactory implements IFactory<TableDAO> {
         switch (type){
             case "primary":
                 return new TableDAOImpl();
-            //break;
             default:
                 throw new Exception("No have factory");
         }

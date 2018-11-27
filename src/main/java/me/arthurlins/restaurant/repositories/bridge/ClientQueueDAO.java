@@ -13,11 +13,8 @@ public interface ClientQueueDAO {
 
     void attend(ClientQueue clientQueue) throws Exception;
 
-    //ClientQueue peek() throws Exception;
     List<ClientQueue> getQueue();
-    //void edit(ClientQueue clientQueue) throws Exception;
-    //void remove(ClientQueue clientQueue);
-    //ClientQueue getById(int id);
+
     List<ClientQueue> view();
-    //List<ClientQueue> view(int qtdPerPage, int page);
+
 }

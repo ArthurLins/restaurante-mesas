@@ -77,7 +77,6 @@ public class TableDAOImpl implements TableDAO {
 
 
     public List<Table> view(int qtdPerPage, int page) {
-        //Todo..
         return null;
     }
 }

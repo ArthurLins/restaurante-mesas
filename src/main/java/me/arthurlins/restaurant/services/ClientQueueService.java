@@ -3,6 +3,7 @@ package me.arthurlins.restaurant.services;
 import me.arthurlins.restaurant.model.ClientQueue;
 import me.arthurlins.restaurant.repositories.bridge.ClientQueueDAO;
 import me.arthurlins.restaurant.repositories.factories.ClientQueuePersistenceFactory;
+import me.arthurlins.restaurant.utils.Config;
 
 import java.util.Comparator;
 import java.util.List;
@@ -15,17 +16,18 @@ import java.util.stream.Collectors;
 public class ClientQueueService {
 
 
-
-    private final int SKIP_COUNT = 2;
-    private final int MARGIN = 0;
+    private final int SKIP_COUNT;
+    private final int MARGIN;
 
     private ClientQueueDAO dao;
 
     public ClientQueueService() {
+        SKIP_COUNT = Integer.parseInt(Config.getInstance().getProperty("skip_count", "1"));
+        MARGIN = Integer.parseInt(Config.getInstance().getProperty("margin", "2"));
         try {
             this.dao = new ClientQueuePersistenceFactory().getInstance();
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 

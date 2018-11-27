@@ -46,7 +46,7 @@ public class ClientQueueDAOImpl implements ClientQueueDAO {
     public void attend(ClientQueue clientQueue) throws Exception {
         Optional<ClientQueue> optionalClientQueue = clientQueues
                 .parallelStream()
-                .filter((cq) -> cq.getId() == clientQueue.getId())
+                .filter(cq -> cq.getId() == clientQueue.getId())
                 .findFirst();
         if (!optionalClientQueue.isPresent()) {
             throw new Exception("ClientQueue not exists");
@@ -58,7 +58,7 @@ public class ClientQueueDAOImpl implements ClientQueueDAO {
     @Override
     public List<ClientQueue> getQueue() {
         return clientQueues.parallelStream()
-                .filter((c) -> !c.isAttended())
+                .filter(c -> !c.isAttended())
                 .sorted(Comparator.comparingLong(ClientQueue::getId))
                 .collect(Collectors.toList());
 

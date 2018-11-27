@@ -16,8 +16,6 @@ public class ClientQueuePersistenceFactory implements IFactory<ClientQueueDAO> {
         switch (type){
             case "primary":
                 return new ClientQueueDAOImpl();
-            //break;
-
             default:
                 throw new Exception("No have factory");
         }
